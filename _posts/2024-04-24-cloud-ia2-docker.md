@@ -33,11 +33,12 @@ Start by cloning the application from GitHub. I've used an application from GitH
 #### 1.2. File Structure
 
 Here's the file structure of the application:
-
+``` bash
 GFG-HACK/
 ├── client/
 └── server/
-
+```
+![![alt text](image.png)](image.png)
 
 ### 2. Creating Docker Hub Repository
 
@@ -49,15 +50,15 @@ Make it public or private as per your preference. Remember the repository name f
 #### 3.1. Dockerfile for ReactJs Server
 
 Navigate to the client directory:
-
+``` bash
 cd client
-
+```
 Create a Dockerfile:
-
+``` bash
 touch Dockerfile
-
+```
 Open the Dockerfile and add the following content:
-
+``` bash
 FROM node:16
 
 WORKDIR /app
@@ -73,25 +74,26 @@ RUN npm run build
 EXPOSE 3000
 
 CMD ["npx", "serve", "-s", "build"]
-
+```
 Build and push the Docker image:
-
+``` bash
 docker build -t AdityaShah04/gfg-hack:client .
 docker push AdityaShah04/gfg-hack:client
-
+```
 
 3.2. Dockerfile for NodeJs Server
 
 Navigate to the server directory:
-
+``` bash
 cd ../server
+```
 
 Create a Dockerfile:
-
+``` bash
 touch Dockerfile
-
+```
 Open the Dockerfile and add the following content:
-
+``` bash
 FROM node:16
 
 WORKDIR /app
@@ -105,34 +107,34 @@ COPY . .
 EXPOSE 5000
 
 CMD ["npm", "start"]
-
+```
 Build and push the Docker image:
-
+``` bash
 docker build -t AdityaShah04/gfg-hack:server .
 
 docker push AdityaShah04/gfg-hack:server
-
+```
 4. Running the Application
 
 Now that we have all our images ready, let's run our application:
-
+``` bash
 docker run -dp 3000:3000 AdityaShah04/gfg-hack:client
 
 docker run -dp 27017:27017 mongo
-
+```
 Create a Docker network and attach it to the MongoDB container. Then, attach the same network to the server container for communication between server and database.
 
-
+``` bash
 docker network create gfg-hack-network
 
 docker network connect gfg-hack-network <mongo-container-id>
 
 docker network connect gfg-hack-network <server-container-id>
-
+```
 Now, run the server container:
-
+``` bash
 docker run -dp 5000:5000 AdityaShah04/gfg-hack:server
-
+```
 Once all containers are up, you can access the app at http://localhost:3000.
 
 Conclusion
@@ -143,3 +145,7 @@ This approach simplifies deployment workflows and lays the groundwork for seamle
 Remember, this is just the beginning! Explore further optimizations for production environments, such as volume management and container orchestration tools like Kubernetes.
 
 Happy coding!
+
+The link to my Git Hub with the Docker Hub is [Docker Images Github][1]
+
+[1]: https://github.com/AdityaShah04
